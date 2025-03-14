@@ -21,6 +21,11 @@
         theme.PrimaryColor = isDarkmode ? "#333" : "#3498db";
     }
 
+    public void UpdateState()
+    {
+        StateHasChanged();
+    }
+
 }
 
 <div style="padding: 1em; background-color: @theme.PrimaryColor; color: white;">
@@ -29,7 +34,7 @@
 
     <CascadingValue Value="@theme">
         <CascadingValue Value="@user">
-            <ChildComponent OnThemeToggle="UpdateTheme"/>
+            <ChildComponent OnThemeToggle="UpdateTheme" OnUpdatestate="UpdateState"/>
         </CascadingValue>
     </CascadingValue>
 </div>
