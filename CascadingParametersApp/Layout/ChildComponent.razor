@@ -1,0 +1,17 @@
+﻿@using static CascadingParametersApp.Models
+
+
+@code {
+    [CascadingParameter]
+    public ThemeSettings Theme { get; set; }
+
+    [CascadingParameter]
+    public UserInfo User { get; set; }
+}
+
+<div style="padding: 1em; background-color: @(Theme.IsDarkMode ? "#333" : "#fff"); color: @(Theme.IsDarkMode ? "white" : "black");">
+    <h4>Child Component</h4>
+    <p>Current User: <strong>@User.Username</strong></p>
+    <p>Role: <strong>@User.Role</strong></p>
+    <p>Dark Mode: <strong>@(Theme.IsDarkMode ? "Enabled" : "Disabled")</strong></p>
+</div>

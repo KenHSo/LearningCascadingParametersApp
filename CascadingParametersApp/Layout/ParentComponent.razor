@@ -1,0 +1,27 @@
+﻿@using static CascadingParametersApp.Models
+
+
+@code {
+    private ThemeSettings theme = new ThemeSettings
+    {
+        PrimaryColor = "#3498db",
+        IsDarkMode = false
+    };
+
+    private UserInfo user = new UserInfo
+    {
+        Username = "Kenneth",
+        Role = "Editor"
+    };
+}
+
+<div style="padding: 1em; background-color: @theme.PrimaryColor; color: white;">
+    <h3>Parent Component</h3>
+    <p>Welcome, @user.Username!</p>
+
+    <CascadingValue Value="@theme">
+        <CascadingValue Value="@user">
+            <ChildComponent />
+        </CascadingValue>
+    </CascadingValue>
+</div>
