@@ -11,8 +11,37 @@
     private UserInfo user = new UserInfo
     {
         Username = "Kenneth",
-        Role = "Editor"
+        Role = "Admin"
     };
+
+    private string[] permissions;
+
+    protected override void OnInitialized()
+    {
+        UpdatePermissions();
+    }
+
+    private void UpdatePermissions()
+    {
+        permissions = user.Role switch
+        {
+            "Admin" => new[] { "Read", "Write", "Delete", "Configure", "Do practical jokes on Editor" },
+            "Editor" => new[] { "Read", "Write", "Edit" },
+            _ => new[] { "Read" } // Default permissions for basic users
+        };
+    }
+
+    private void ChangeRole()
+    {
+        user.Role = user.Role switch
+        {
+            "Admin" => "Editor",
+            "Editor" => "User",
+            _ => "Admin"
+        };
+        UpdatePermissions();
+    }
+
 
     // This method will update the theme when called
     private void UpdateTheme(bool isDarkmode)
@@ -34,7 +63,11 @@
 
     <CascadingValue Value="@theme">
         <CascadingValue Value="@user">
-            <ChildComponent OnThemeToggle="UpdateTheme" OnUpdatestate="UpdateState"/>
+            <CascadingValue Value="@permissions">
+                <ChildComponent OnThemeToggle="UpdateTheme" OnUpdatestate="UpdateState" OnRoleChange="ChangeRole" />
+                <RoleBasedContent />
+            </CascadingValue>
         </CascadingValue>
     </CascadingValue>
 </div>
+

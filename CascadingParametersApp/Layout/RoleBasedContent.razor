@@ -1,0 +1,34 @@
+﻿@using static CascadingParametersApp.Models
+
+
+@code {
+	[CascadingParameter]
+	public UserInfo User { get; set; }
+
+    [CascadingParameter]
+    public string[] Permissions { get; set; }
+}
+
+
+<div style="padding: 1em; border: 1px solid #ccc; margin-top: 1em;">
+    <h4>Role-Based Content</h4>
+    @if (User.Role == "Admin")
+    {
+        <p style="color: red;"><strong>Welcome, Admin!</strong> You have full access to the system.</p>
+    }
+    else if (User.Role == "Editor")
+    {
+        <p style="color: orange;"><strong>Welcome, Editor!</strong> You can manage content but not settings.</p>
+    }
+    else
+    {
+        <p style="color: green;"><strong>Welcome, User!</strong> You have basic access.</p>
+    }
+    <h5>Your Permissions:</h5>
+    <ul>
+        @foreach (var permission in Permissions)
+        {
+            <li>@permission</li>
+        }
+    </ul>
+</div>

@@ -15,6 +15,9 @@
     [Parameter]
     public EventCallback OnUpdateState { get; set; }
 
+    [Parameter]
+    public EventCallback OnRoleChange { get; set; }
+
     private void ToggleDarkMode()
     {
         bool newDarkmode = !Theme.IsDarkMode;
@@ -27,16 +30,22 @@
         OnUpdateState.InvokeAsync(); // Notify the parent to re-render
     }
 
+    private void ChangeRole()
+    {
+        OnRoleChange.InvokeAsync();
+    }
 
 }
 
 <div style="padding: 1em; background-color: @(Theme.IsDarkMode ? "#333" : "#fff"); color: @(Theme.IsDarkMode ? "white" : "black");">
     <h4>Child Component</h4>
     <p>Current User: <strong>@User.Username</strong></p>
+
+    <button @onclick="ChangeRole">Change Role</button>
     <p>Role: <strong>@User.Role</strong></p>
-    <p>Dark Mode: <strong>@(Theme.IsDarkMode ? "Enabled" : "Disabled")</strong></p>
 
     <button @onclick="ToggleDarkMode">Toggle Dark Mode</button>
+    <p>Dark Mode: <strong>@(Theme.IsDarkMode ? "Enabled" : "Disabled")</strong></p>
 
     <div style="margin-top: 1em;">
         <label for="usernameInput" >Update Username:</label>
