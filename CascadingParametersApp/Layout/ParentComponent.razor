@@ -13,6 +13,14 @@
         Username = "Kenneth",
         Role = "Editor"
     };
+
+    // This method will update the theme when called
+    private void UpdateTheme(bool isDarkmode)
+    {
+        theme.IsDarkMode = isDarkmode;
+        theme.PrimaryColor = isDarkmode ? "#333" : "#3498db";
+    }
+
 }
 
 <div style="padding: 1em; background-color: @theme.PrimaryColor; color: white;">
@@ -21,7 +29,7 @@
 
     <CascadingValue Value="@theme">
         <CascadingValue Value="@user">
-            <ChildComponent />
+            <ChildComponent OnThemeToggle="UpdateTheme"/>
         </CascadingValue>
     </CascadingValue>
 </div>

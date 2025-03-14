@@ -7,6 +7,17 @@
 
     [CascadingParameter]
     public UserInfo User { get; set; }
+
+    // This callback will notify the parent about changes
+    [Parameter]
+    public EventCallback<bool> OnThemeToggle { get; set; }
+
+    private void ToggleDarkMode()
+    {
+        bool newDarkmode = !Theme.IsDarkMode;
+        OnThemeToggle.InvokeAsync(newDarkmode); // Notify the parent
+    }
+
 }
 
 <div style="padding: 1em; background-color: @(Theme.IsDarkMode ? "#333" : "#fff"); color: @(Theme.IsDarkMode ? "white" : "black");">
@@ -14,4 +25,7 @@
     <p>Current User: <strong>@User.Username</strong></p>
     <p>Role: <strong>@User.Role</strong></p>
     <p>Dark Mode: <strong>@(Theme.IsDarkMode ? "Enabled" : "Disabled")</strong></p>
+
+    <button @onclick="ToggleDarkMode">Toggle Dark Mode</button>
+
 </div>
